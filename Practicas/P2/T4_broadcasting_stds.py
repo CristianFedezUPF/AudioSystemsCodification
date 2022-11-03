@@ -1,10 +1,9 @@
 import os
-import subprocess
 
 
 # help from https://stackoverflow.com/a/29610897
-# Command takes output from ffprobe, greps to get the line which have stream
-# info for 'Audio' and further searches using 'sed' to return only the codec
+# Command takes output from ffprobe, greps to get the lines which have stream
+# info for 'Audio' and further searches using 'sed' to return only the codec.
 # popen().read() executes command and returns command line output
 # which is stored in a variable
 def task4(input_path):
@@ -24,6 +23,7 @@ def task4(input_path):
     check_broadcasting_standards(audios, videos)
 
 
+# finds if audio and video codecs found comply with diff broadcasting standards
 def check_broadcasting_standards(audio_list: list, video_list: list):
     dvb_audio = ["aac", "ac3", "mp3"]
     dvb_video = ["mpeg2video", "h264"]
@@ -54,3 +54,7 @@ def check_compliance(file_codecs: list, bcast_codecs: list,
                      broadcast: str, standards: list):
     if [i for i in file_codecs if i in bcast_codecs]:
         standards.append(broadcast)
+
+
+if __name__ == "__main__":
+    print("You should run main.py file")

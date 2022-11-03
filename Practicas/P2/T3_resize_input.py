@@ -2,6 +2,8 @@ import math
 import os
 
 
+# reusing different resize video/audio commands from other exercises,
+# with a 'decision tree' from user input
 def task3(input_path: str, output_path: str):
     command = ""
     option = int(input("Do you want to resize video (0) or audio (1)? -> "))
@@ -39,3 +41,7 @@ def task3(input_path: str, output_path: str):
         print("Incorrect option, returning...")
         return
     os.system(command)
+
+
+if __name__ == "__main__":
+    print("You should run main.py file")

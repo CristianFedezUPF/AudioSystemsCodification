@@ -1,0 +1,7 @@
+--- Task 4 - Check broadcasting standards ---
+File audio tracks: mp3, ac3
+File video tracks: h264
+
+File audio is compliant with: DVB, ATSC, DTMB
+File video is compliant with: DVB, ISDB, ATSC, DTMB
+Overall, file is fully compliant with: DTMB, ATSC, DVB

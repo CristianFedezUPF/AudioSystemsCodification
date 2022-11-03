@@ -9,3 +9,7 @@ import os
 def task1(input_path):
     command = "ffprobe -i " + input_path + " -show_format -pretty"
     os.system(command)
+
+
+if __name__ == "__main__":
+    print("You should run main.py file")
