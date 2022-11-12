@@ -48,15 +48,20 @@ def task2(input_path: str):
         crf = 25
         output_path += "AV1.mkv"
         command1 = "ffmpeg -i " + input_path + " -c:v libaom-av1 -crf " \
-            + str(crf) + " -b:v 0 -pass 1 -an -f null /dev/null"
+            + str(crf) + " -b:v 0 -g 300 -tile-columns 2 -tile-rows 2" \
+            " -row-mt 1 -threads 8 -cpu-used 6 -pass 1 -an -f null /dev/null"
         command2 = "ffmpeg -i " + input_path + " -c:v libaom-av1 -crf " \
-            + str(crf) + " -b:v 0 -pass 2 -c:a libvorbis " + output_path
-        # command = command1 + " && " + command2
+            + str(crf) + " -b:v 0 -g 300 -tile-columns 2 -tile-rows 2" \
+            " -row-mt 1 -threads 8 -cpu-used 6 -pass 2 " \
+            "-c:a libvorbis " + output_path
+        command = command1 + " && " + command2
         os.system(command)
         print("Converted to AV1 at Two Pass constant quality mode "
-              "CRF = 25 (recommmended mode), audio in Vorbis")
+              "CRF = 25 (recommmended mode), speed preset 6 (faster,"
+              " default is 1), 2x2 tiles for multithreading,"
+              " audio in Vorbis")
 
 
 if __name__ == "__main__":
     print("You should perhaps run main.py file")
-    task2("bbb360x240/bbb360x240.mp4")
+    task2("bbb720/bbb720.mp4")
