@@ -35,7 +35,7 @@ def task2(input_path: str, crf: int, preset_idx=5):
                   + "M -c:a libvorbis " + output_path
         os.system(command)
         print("Converted to VP8 at Variable Bitrate at constant quality mode "
-              "CRF = 25, max bitrate allowed 8 MB/s (recommmended mode), "
+              "CRF = 25, max bitrate allowed 8 Mbps (recommmended mode), "
               "audio in Vorbis")
     if option == "2":
         output_path += "VP9.mkv"

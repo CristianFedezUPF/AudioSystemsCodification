@@ -65,7 +65,7 @@ def convert_codec(input_path: str, option: str, mainframe: Frame,
         os.system(command)
         print("Converted to VP8 at Variable Bitrate at constant quality mode "
               "CRF = " + str(crf) + " , max bitrate allowed "
-                                    "8 MB/s (recommmended mode), "
+                                    "8 Mbps (recommmended mode), "
                                     "audio in Vorbis")
     if option == "2":
         output_path += "VP9.mkv"
