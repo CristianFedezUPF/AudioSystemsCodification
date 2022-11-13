@@ -1,15 +1,22 @@
 import os
 from tkinter import *
 import utils_tkinter as utils
-from main import init_window
+import tasks_tkinter_UI_handler as UI_handler
+
+"""
+Functions here perform the actual conversions using FFmpeg, they are very 
+similar to the standalone functions but with the console input removed
+and some additional Tkinter UI calls. (that's why I decided it was better
+to separate them, it would be a mess otherwise.)
+"""
 
 
 def convert_resolution(input_path: str, option: str, mainframe: Frame):
     if not os.path.isfile(input_path):
         utils.append_message_frame(mainframe, "File not found, try again.",
-                                   row=2, column=3, sticky=NSEW)
+                                   row=0, column=3, sticky=NSEW)
         return
-    utils.show_message_frame(mainframe, "Converting...")
+    utils.show_message_frame(mainframe, "Converting...", padx=10)
     output_path = input_path.split(".")[0]
     command = ""
     while option not in ("1", "2", "3", "4"):
@@ -33,18 +40,23 @@ def convert_resolution(input_path: str, option: str, mainframe: Frame):
                   + output_path
     os.system(command)
     utils.clear_frame(mainframe)
-    init_window(mainframe)
+    UI_handler.init_window(mainframe)
 
 
 def convert_codec(input_path: str, option: str, mainframe: Frame,
-                  crf=25, hevc_preset_idc=5):
+                  crf, hevc_preset_idc=5):
     if not os.path.isfile(input_path):
         utils.append_message_frame(mainframe, "File not found, try again.",
-                                   row=2, column=3, sticky=NSEW)
+                                   row=0, column=2, sticky=NSEW)
         return
-    utils.show_message_frame(mainframe, "Converting...")
+    if not 5 <= crf <= 50:
+        utils.append_message_frame(mainframe, "CRF not between 5 and 50.",
+                                   row=0, column=2, sticky=NSEW)
+        return
+    utils.show_message_frame(mainframe, "Converting...", padx=10)
     output_path = input_path.split(".")[0]
     max_allowed_bitrate = 8  # MBPS
+    crf = crf if 5 <= crf <= 50 else 25
     if option == "1":
         output_path += "VP8.mkv"
         command = "ffmpeg -i " + input_path + " -c:v libvpx -crf " \
@@ -97,8 +109,8 @@ def convert_codec(input_path: str, option: str, mainframe: Frame,
                                     " default is 1), 2x2 tiles"
                                     " for multithreading,"
                                     " audio in Vorbis")
-        utils.clear_frame(mainframe)
-        init_window(mainframe)
+    utils.clear_frame(mainframe)
+    UI_handler.init_window(mainframe)
 
 
 def stack_videos(input1: str, input2: str, input3: str, input4: str, tags: list,
@@ -107,10 +119,11 @@ def stack_videos(input1: str, input2: str, input3: str, input4: str, tags: list,
             os.path.isfile(input2) or
             os.path.isfile(input3) or
             os.path.isfile(input4)):
-        utils.append_message_frame(mainframe, "File not found, try again.",
-                                   row=2, column=3, sticky=NSEW)
+        utils.append_message_frame(mainframe, "One or more of the files are"
+                                              " not found, try again.",
+                                   row=2, column=1, sticky=NSEW)
         return
-    utils.show_message_frame(mainframe, "Converting...")
+    utils.show_message_frame(mainframe, "Converting...", padx=10)
     inputs = "ffmpeg" \
              " -i " + input1 + \
              " -i " + input2 + \
@@ -137,7 +150,7 @@ def stack_videos(input1: str, input2: str, input3: str, input4: str, tags: list,
     command = inputs + filters + output
     os.system(command)
     utils.clear_frame(mainframe)
-    init_window(mainframe)
+    UI_handler.init_window(mainframe)
 
 
 if __name__ == "__main__":

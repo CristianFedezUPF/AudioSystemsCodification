@@ -1,9 +1,15 @@
 import os
 
+"""
+Converts input file to 4 size options using console input, 720p, 480p,
+360x240 or 160x120.
+"""
 
-# reusing different resize video/audio commands from other exercises,
-# with a 'decision tree' from user input
+
 def task1(input_path: str):
+    if not os.path.isfile(input_path):
+        print("Input file not found.")
+        return
     option = -1
     output_path = input_path.split(".")[0]
     command = ""
@@ -30,4 +36,5 @@ def task1(input_path: str):
 
 
 if __name__ == "__main__":
-    task1("bbb.mp4")
+    input1 = input("Type the path of your input video here: ")
+    task1(input1)
