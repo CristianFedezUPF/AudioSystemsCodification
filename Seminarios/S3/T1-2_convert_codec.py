@@ -11,7 +11,7 @@ presets = ["ultrafast", "superfast", "veryfast", "faster", "fast",
 """
 
 
-def task2(input_path: str, crf: int, preset_idx=5):
+def task2(input_path: str, crf=25, preset_idx=5):
     if not os.path.isfile(input_path):
         print("Input file not found.")
         return
@@ -35,7 +35,8 @@ def task2(input_path: str, crf: int, preset_idx=5):
                   + "M -c:a libvorbis " + output_path
         os.system(command)
         print("Converted to VP8 at Variable Bitrate at constant quality mode "
-              "CRF = 25, max bitrate allowed 8 Mbps (recommmended mode), "
+              "CRF = " + str(crf) + ", max bitrate "
+              "allowed 8 Mbps (recommmended mode), "
               "audio in Vorbis")
     if option == "2":
         output_path += "VP9.mkv"
@@ -47,7 +48,7 @@ def task2(input_path: str, crf: int, preset_idx=5):
         command = command1 + " && " + command2
         os.system(command)
         print("Converted to VP9 at Two Pass constant quality mode "
-              "CRF = 25 (recommmended mode), "
+              "CRF = " + str(crf) + " (recommmended mode), "
               "audio in Vorbis")
     if option == "3":
         output_path += "HEVC.mkv"
@@ -60,7 +61,7 @@ def task2(input_path: str, crf: int, preset_idx=5):
         os.system(command)
         print("Converted to HEVC at Constant Rate Factor (constant quality) at"
               " 'medium' compression efficiency preset, "
-              "CRF = 25 (recommmended mode), audio in Vorbis")
+              "CRF = " + str(crf) + " (recommmended mode), audio in Vorbis")
     if option == "4":
         output_path += "AV1.mkv"
         command1 = "ffmpeg -i " + input_path + " -c:v libaom-av1 -crf " \
@@ -74,11 +75,12 @@ def task2(input_path: str, crf: int, preset_idx=5):
         command = command1 + " && " + command2
         os.system(command)
         print("Converted to AV1 at Two Pass constant quality mode "
-              "CRF = 25 (recommmended mode), speed preset 6 (faster,"
+              "CRF = " + str(crf) + " (recommmended mode),"
+              " speed preset 6 (faster,"
               " default is 1), 2x2 tiles for multithreading,"
               " audio in Vorbis")
 
 
 if __name__ == "__main__":
     input1 = input("Type the path of your input video here: ")
-    task2(input1, 5, -1)
+    task2(input1)
