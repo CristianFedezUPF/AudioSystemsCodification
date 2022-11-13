@@ -2,9 +2,7 @@ import os
 
 
 def task2(input_path: str):
-    first_options = ["VP8", "VP9", "HEVC", "AV1"]
     output_path = input_path.split(".")[0]
-    command = ""
     option = ""
     max_allowed_bitrate = 8  # MBPS
     while option not in ("1", "2", "3", "4"):

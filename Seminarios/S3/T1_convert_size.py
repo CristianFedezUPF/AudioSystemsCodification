@@ -30,5 +30,4 @@ def task1(input_path: str):
 
 
 if __name__ == "__main__":
-    print("You should perhaps run main.py file")
     task1("bbb.mp4")
